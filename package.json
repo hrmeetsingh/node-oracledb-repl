@@ -1,0 +1,17 @@
+{
+  "name": "node-oracledb-repl",
+  "version": "1.0.0",
+  "description": "NodeJs REPL for interacting with Oracle Database using \"oracledb\" npm module",
+  "main": "setup.js",
+  "repository": "https://github.com/hrmeetsingh/node-oracledb-repl.git",
+  "author": "Harmeet Singh",
+  "license": "MIT",
+  "scripts": {
+    "setup:dev": "ENVIRONMENT=dev TZ='UTC' yarn node setup.js",
+    "setup:test": "ENVIRONMENT=test TZ='UTC' yarn node setup.js"
+  },
+  "dependencies": {
+    "chalk": "^2.4.2",
+    "oracledb": "^3.1.2"
+  }
+}

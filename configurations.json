@@ -1,0 +1,14 @@
+{
+  "dev": {
+    "HOST_IP": "<DEV_HOST_IP>",
+    "SID": "<SID>",
+    "USERNAME": "<USERNAME>",
+    "PASSWORD": "<PASSWORD>"
+  },
+  "test": {
+    "HOST_IP": "<TEST_HOST_IP>",
+    "SID": "<SID>",
+    "USERNAME": "<USERNAME>",
+    "PASSWORD": "<PASSWORD>"
+  }
+}
