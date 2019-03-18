@@ -18,25 +18,30 @@ const getDbConfig = env => {
 const config = getDbConfig(process.env);
 let conn;
 
-oracledb.getConnection(config).then(res => {
-  conn = res;
-  console.log(chalk.green("Got Connection, starting REPL !!"));
-  const replServer = repl.start({
-    prompt: `${pjson.name}> `
-  });
-
-  replServer.on("exit", () => {
-    console.log(
-      chalk.red('Received "exit" event from REPL, closing connection !!')
-    );
-    conn.close();
-    process.exit();
-  });
-
-  replServer.defineCommand("query", strQuery => {
-    console.log(chalk.blueBright("query passed : ", strQuery));
-    conn.execute(strQuery).then(queryResult => {
-      console.log(queryResult);
+oracledb
+  .getConnection(config)
+  .then(res => {
+    conn = res;
+    console.log(chalk.green("Got Connection, starting REPL !!"));
+    const replServer = repl.start({
+      prompt: `${pjson.name}> `
     });
+
+    replServer.on("exit", () => {
+      console.log(
+        chalk.red('Received "exit" event from REPL, closing connection !!')
+      );
+      conn.close();
+      process.exit();
+    });
+
+    replServer.defineCommand("query", strQuery => {
+      console.log(chalk.blueBright("query passed : ", strQuery));
+      conn.execute(strQuery).then(queryResult => {
+        console.log(queryResult);
+      });
+    });
+  })
+  .catch(error => {
+    console.error(error);
   });
-});
