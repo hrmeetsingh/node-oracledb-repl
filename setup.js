@@ -37,9 +37,15 @@ oracledb
 
     replServer.defineCommand("query", strQuery => {
       console.log(chalk.blueBright("query passed : ", strQuery));
-      conn.execute(strQuery).then(queryResult => {
-        console.log(queryResult);
-      });
+      conn
+        .execute(strQuery)
+        .then(queryResult => {
+          console.log(queryResult);
+          replServer.displayPrompt();
+        })
+        .catch(error => {
+          console.error(error);
+        });
     });
   })
   .catch(error => {
