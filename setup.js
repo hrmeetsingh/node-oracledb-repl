@@ -24,7 +24,7 @@ oracledb
     conn = res;
     console.log(chalk.green("Got Connection, starting REPL !!"));
     const replServer = repl.start({
-      prompt: `${pjson.name}> `
+      prompt: `${pjson.name}:${process.env.ENVIRONMENT}> `
     });
 
     replServer.on("exit", () => {
