@@ -3,6 +3,7 @@ const repl = require("repl");
 const pjson = require("./package.json");
 const constants = require("./configurations.json");
 const chalk = require("chalk");
+const Table = require("cli-table");
 
 const getDbConfig = env => {
   const hostIp = constants[process.env.ENVIRONMENT].HOST_IP || "";
@@ -17,6 +18,21 @@ const getDbConfig = env => {
 
 const config = getDbConfig(process.env);
 let conn;
+
+function getTable(tableData) {
+  const cleanedData = JSON.parse(
+    JSON.stringify(tableData).replace(/null/gi, '"null"')
+  );
+  const table = new Table({
+    head: cleanedData.metaData.map(v => {
+      return v.name;
+    })
+  });
+  cleanedData.rows.forEach(rw => {
+    table.push(rw);
+  });
+  return table;
+}
 
 oracledb
   .getConnection(config)
@@ -40,7 +56,7 @@ oracledb
       conn
         .execute(strQuery)
         .then(queryResult => {
-          console.log(queryResult);
+          console.log(getTable(queryResult).toString());
           replServer.displayPrompt();
         })
         .catch(error => {
